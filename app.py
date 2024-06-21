@@ -89,8 +89,32 @@ elif st.session_state.current_page == 5:
         )
     
     result = json.loads(chat_completion.choices[0].message.content)
-    pretty_result = json.dumps(result, ensure_ascii=False, indent=4)
+    # pretty_result = json.dumps(result, ensure_ascii=False, indent=4)
+    
+    city = result["city"]
+    fashion = result["lifestyle"]['fashion']
+    values = result["lifestyle"]['values']
+    items = result["lifestyle"]['items']
+    people = result["people"]
     
     st.balloons()
-    st.write(pretty_result)
+    st.write(f"당신의 분위기에 어울리는 도시는 {city}입니다.")
+    st.write("당신만을 위한 라이프스타일 큐레이션을 제공합니다.")
+    st.write("당신의 취향에 맞는 패션을 추천해드립니다.")
+    for f in fashion:
+        st.write(f["brand"])
+        st.write(f["explanation"])
+    st.write("당신이 흥미를 느낄만한 가치관을 소개합니다.") 
+    for v in values:
+        st.write(v["idea"])
+        st.write(v["explanation"])
+    st.write("당신이 좋아할 만한 아이템을 소개합니다.")
+    for i in items:
+        st.write(i["brand"])
+        st.write(i["explanation"])
+    st.write("당신의 분위기에 어울리는 사람들을 소개합니다.")
+    for p in people:
+        st.write(p['name'])
+        st.markdown(f"[{p["account"]}]({p["accountUrl"]})")
+        st.write(p["explanation"])
     st.button("처음부터", on_click=reset)
