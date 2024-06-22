@@ -1,17 +1,21 @@
 import streamlit as st
 
 
+MULTISELECT_PLACEHOLDER = "최대 다섯 개까지 고를 수 있어요"
+
+
 def showPage1():
     st.progress(0)
-    st.write(
-        "당신의 캐릭터를 바탕으로 당신의 분위기에 어울리는 도시를 추천해주고 당신만을 위한 라이프스타일 큐레이션을 제공합니다."
-    )
+    st.subheader("나만의 분위기를 만들고 싶다면")
+    st.subheader("CHUGUMI FOR YOU에서")
+    st.subheader("나만의 라이프스타일 추구미를 발견해보세요")
 
 
 # 성격 - character
 def showPage2():
     st.progress(33)
-    st.write("당신의 성격을 알려주세요")
+    st.subheader("당신은 어떤 사람인가요?")
+    st.markdown(":gray[당신의 성격이 가장 잘 나타나는 표현을 골라주세요.]")
     character = st.multiselect(
         "",
         [
@@ -49,6 +53,7 @@ def showPage2():
         default=None,
         max_selections=5,
         label_visibility="collapsed",
+        placeholder=MULTISELECT_PLACEHOLDER,
     )
     return ", ".join(character)
 
@@ -56,7 +61,8 @@ def showPage2():
 # 가치관 - values
 def showPage3():
     st.progress(66)
-    st.write("당신의 가치관을 알려주세요")
+    st.subheader("당신이 무엇을 중요하게 여기나요?")
+    st.markdown(":gray[당신의 가치관이 가장 잘 나타나는 표현을 골라주세요.]")
     values = st.multiselect(
         "",
         [
@@ -94,6 +100,7 @@ def showPage3():
         default=None,
         max_selections=5,
         label_visibility="collapsed",
+        placeholder=MULTISELECT_PLACEHOLDER,
     )
     return ", ".join(values)
 
@@ -101,7 +108,8 @@ def showPage3():
 # 취향 - taste
 def showPage4():
     st.progress(100)
-    st.write("당신의 취향을 알려주세요")
+    st.subheader("당신은 어떤 스타일을 좋아하나요?")
+    st.markdown(":gray[당신의 취향이 가장 잘 나타나는 표현을 골라주세요.]")
     taste = st.multiselect(
         "",
         [
@@ -139,6 +147,7 @@ def showPage4():
         default=None,
         max_selections=5,
         label_visibility="collapsed",
+        placeholder=MULTISELECT_PLACEHOLDER,
     )
 
     return ", ".join(taste)

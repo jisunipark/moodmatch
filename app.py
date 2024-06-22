@@ -3,9 +3,11 @@ import os
 from openai import OpenAI
 import showPages as show
 import prompt as p
+import css
 import json
-import time
 
+
+st.markdown(css.css, unsafe_allow_html=True)
 
 os.environ["OPENAI_API_KEY"] = st.secrets["API_KEY"]
 
@@ -43,21 +45,21 @@ def add_info(item):
 
 if st.session_state.current_page == 1:
     show.showPage1()
-    if st.button("시작하기"):
+    if st.button("나만의 추구미 찾으러 가기"):
         move_to_next_page()
 elif st.session_state.current_page == 2:
     character = show.showPage2()
-    if st.button("다음", disabled=not character):
+    if st.button("다 골랐어요!", disabled=not character):
         add_info({"character": character})
         move_to_next_page()
 elif st.session_state.current_page == 3:
     values = show.showPage3()
-    if st.button("다음", disabled=not values):
+    if st.button("다 골랐어요!", disabled=not values):
         add_info({"values": values})
         move_to_next_page()
 elif st.session_state.current_page == 4:
     taste = show.showPage4()
-    if st.button("다음", disabled=not taste):
+    if st.button("다 골랐어요!", disabled=not taste):
         add_info({"taste": taste})
         move_to_next_page()
 elif st.session_state.current_page == 5:
@@ -98,23 +100,46 @@ elif st.session_state.current_page == 5:
     people = result["people"]
     
     st.balloons()
-    st.write(f"당신의 분위기에 어울리는 도시는 {city}입니다.")
-    st.write("당신만을 위한 라이프스타일 큐레이션을 제공합니다.")
-    st.write("당신의 취향에 맞는 패션을 추천해드립니다.")
-    for f in fashion:
-        st.write(f["brand"])
-        st.write(f["explanation"])
-    st.write("당신이 흥미를 느낄만한 가치관을 소개합니다.") 
-    for v in values:
-        st.write(v["idea"])
-        st.write(v["explanation"])
-    st.write("당신이 좋아할 만한 아이템을 소개합니다.")
-    for i in items:
-        st.write(i["brand"])
-        st.write(i["explanation"])
-    st.write("당신의 분위기에 어울리는 사람들을 소개합니다.")
-    for p in people:
-        st.write(p['name'])
-        st.markdown(f"[{p["account"]}]({p["accountUrl"]})")
-        st.write(p["explanation"])
-    st.button("처음부터", on_click=reset)
+    st.subheader(f"당신은 {city}의 무드와 잘 어울리는군요!")
+    st.button("다시 할래요", on_click=reset)
+    
+    tab1, tab2 = st.tabs(["lifestyle", "spotlight"])
+
+    with tab1:
+      st.subheader(f"{city}에서 감각적으로 사는 사람들의 라이프스타일을 분석해보았어요.")
+      st.write("패션")
+  
+
+      for f in fashion:
+          with st.container(border=True):
+            st.write(f["brand"])
+            st.write(f["explanation"])
+      st.write("가치관") 
+      for v in values:
+          with st.container(border=True):
+            st.write(v["idea"])
+            st.write(v["explanation"])
+      st.write("아이템")
+      for i in items:
+        with st.container(border=True):
+            st.write(i["brand"])
+            st.write(i["explanation"])
+
+    with tab2:
+      st.subheader(f"{city}에 사는 감각적인 사람들을 모아봤어요.")
+      for p in people:
+        with st.container(border=True):
+          st.write(p['name'])
+          st.markdown(f"[{p["account"]}]({p["accountUrl"]})")
+          st.write(p["explanation"])
+
+
+    
+
+# """
+# TODO
+# - 첫 페이지 디자인
+# - 문항 페이지 디자인
+# - 결과 페이지 디자인
+
+# """
