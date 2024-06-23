@@ -145,7 +145,6 @@ system_2 = "그리고 나서 결과로 나온 도시에 사는 사람 중 감각
 system_3 = f"결과는 JSON 형식에 맞춰서 줘. 데이터 구조는 다음과 같아: {example_data}. fasion, values, items 배열은 각각 3개의 요소를 가지고 있어야 하고, people 배열은 5개의 요소를 가지고 있어야 해."
 
 
-
 st.markdown(css, unsafe_allow_html=True)
 
 os.environ["OPENAI_API_KEY"] = st.secrets["API_KEY"]
@@ -169,19 +168,22 @@ def move_to_next_page():
 def move_to_previous_page():
     st.session_state.current_page -= 1
     st.rerun()
-    
+
+
 def reset():
     st.session_state.current_page = 1
     st.session_state.info = {}
     st.rerun()
 
+
 def add_info(item):
     st.session_state.info.update(item)
-    
-    
+
+
 def showLogo():
     with st.container(height=100, border=None):
         st.image("logo.svg", width=250)
+
 
 MULTISELECT_PLACEHOLDER = "최대 다섯 개까지 고를 수 있어요"
 
@@ -190,6 +192,7 @@ def showPage1():
     st.image("landing-logo.png")
     if st.button("나만의 추구미 찾으러 가기"):
         move_to_next_page()
+
 
 # 성격 - character
 def showPage2():
@@ -335,6 +338,7 @@ def showPage4():
 
     return ", ".join(taste)
 
+
 if st.session_state.current_page == 1:
     showPage1()
 elif st.session_state.current_page == 2:
@@ -377,69 +381,77 @@ elif st.session_state.current_page == 5:
                 },
             ],
             model="gpt-4o",
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
         )
-    
+
     result = json.loads(chat_completion.choices[0].message.content)
-    
+
     city = result["city"]
-    fashion = result["lifestyle"]['fashion']
-    values = result["lifestyle"]['values']
-    items = result["lifestyle"]['items']
+    fashion = result["lifestyle"]["fashion"]
+    values = result["lifestyle"]["values"]
+    items = result["lifestyle"]["items"]
     people = result["people"]
-    
+
     st.balloons()
-    st.markdown(f"<h2 style='text-algin:center;margin-top:120px'>당신은 <span style='color:#ff4b4b'>{city}</span>의 무드와 잘 어울리는군요!</h2>", unsafe_allow_html=True)
+    st.markdown(
+        f"<h2 style='text-algin:center;margin-top:120px'>당신은 <span style='color:#ff4b4b'>{city}</span>의 무드와 잘 어울리는군요!</h2>",
+        unsafe_allow_html=True,
+    )
     st.button("다시 할래요", on_click=reset)
-    
+
     tab1, tab2 = st.tabs(["☀️ lifestyle", "🙎🏻 spotlight"])
 
     with tab1:
-      st.markdown(f"### <span style='color:#ff4b4b'>{city}</span>의 라이프스타일을 분석해보았어요.", unsafe_allow_html=True)
-      
-      st.markdown("#### 🛍️ 패션")
-      col1, col2, col3 = st.columns(3)
-      fashion_cols = [col1, col2, col3]
-      for col in fashion_cols:
-          index = fashion_cols.index(col)
-          with col:
-            st.markdown(f"##### {fashion[index]["brand"]}")
-            st.write(fashion[index]["explanation"])
-            
-      st.divider()
-            
-      st.markdown("#### 👀 가치관") 
-      col4, col5, col6 = st.columns(3)
-      values_cols = [col4, col5, col6]
-      for col in values_cols:
-          index = values_cols.index(col)
-          with col:
-            st.markdown(f"##### {values[index]["idea"]}")
-            st.write(values[index]["explanation"])
-            
-      st.divider()
-            
-      st.markdown("#### 🔎 아이템")
-      col6, col7, col8 = st.columns(3)
-      items_cols = [col6, col7, col8]
-      for col in items_cols:
-          index = items_cols.index(col)
-          with col:
-            st.markdown(f"##### {items[index]["brand"]}")
-            st.write(items[index]["explanation"])
+        st.markdown(
+            f"### <span style='color:#ff4b4b'>{city}</span>의 라이프스타일을 분석해보았어요.",
+            unsafe_allow_html=True,
+        )
+
+        st.markdown("#### 🛍️ 패션")
+        col1, col2, col3 = st.columns(3)
+        fashion_cols = [col1, col2, col3]
+        for col in fashion_cols:
+            index = fashion_cols.index(col)
+            with col:
+                st.markdown(f"##### {fashion[index]['brand']}")
+                st.write(fashion[index]["explanation"])
+
+        st.divider()
+
+        st.markdown("#### 👀 가치관")
+        col4, col5, col6 = st.columns(3)
+        values_cols = [col4, col5, col6]
+        for col in values_cols:
+            index = values_cols.index(col)
+            with col:
+                st.markdown(f"##### {values[index]['idea']}")
+                st.write(values[index]["explanation"])
+
+        st.divider()
+
+        st.markdown("#### 🔎 아이템")
+        col6, col7, col8 = st.columns(3)
+        items_cols = [col6, col7, col8]
+        for col in items_cols:
+            index = items_cols.index(col)
+            with col:
+                st.markdown(f"##### {items[index]['brand']}")
+                st.write(items[index]["explanation"])
 
     with tab2:
-      st.markdown(f"### <span style='color:#ff4b4b'>{city}</span>에 사는 감각적인 사람들을 모아봤어요.", unsafe_allow_html=True)
-      for p in people:
-        with st.container():
-          st.markdown(f"#### **{p['name']}**")
-          st.write(p["explanation"])
-          instagram_embed_code = f"""
+        st.markdown(
+            f"### <span style='color:#ff4b4b'>{city}</span>에 사는 감각적인 사람들을 모아봤어요.",
+            unsafe_allow_html=True,
+        )
+        for p in people:
+            with st.container():
+                st.markdown(f"#### **{p['name']}**")
+                st.write(p["explanation"])
+                instagram_embed_code = f"""
           <blockquote class="instagram-media" data-instgrm-permalink="{p["accountUrl"]}" data-instgrm-version="12" style="border:none;" >
               <div style="padding:16px;"> <a href="{p["accountUrl"]}" target="_blank"> </a></div>
           </blockquote>
           <script async defer src="//www.instagram.com/embed.js"></script>
           """
-          components.html(instagram_embed_code)
-          st.divider()
-          
+                components.html(instagram_embed_code)
+                st.divider()
