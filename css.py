@@ -1,5 +1,4 @@
 css = """
-
 <style>
   h1 {
     position: fixed;
@@ -12,6 +11,16 @@ css = """
   h3 {
     font-size: 1.5em;
     padding: 0.5rem 0px;
+  }
+  
+  h5 {
+    text-align: center;
+  }
+
+  
+  iframe {
+    height: 142px;
+    border-radius: 8px;
   }
 
   .block-container {
@@ -36,13 +45,22 @@ css = """
     margin-top: 64px;    
     gap: 1.5rem;
   }
-
   
   .stButton {
     display: flex;
     justify-content: end;
   }
-
+  
+  .st-emotion-cache-r421ms.e1f1d6gn0 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .st-emotion-cache-r421ms.e1f1d6gn0 p {
+    text-align: center;
+  }
 
 </style>
 

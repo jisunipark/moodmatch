@@ -5,6 +5,7 @@ import showPages as show
 import prompt as p
 import css
 import json
+import streamlit.components.v1 as components
 
 
 st.markdown(css.css, unsafe_allow_html=True)
@@ -66,7 +67,7 @@ elif st.session_state.current_page == 5:
 
     info = st.session_state.info
 
-    with st.spinner("AI가 당신의 분위기를 찾아주고 있어요! 잠시만 기다려주세요."):
+    with st.spinner("당신의 분위기에 찰떡인 도시를 찾고 있어요!"):
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -91,7 +92,6 @@ elif st.session_state.current_page == 5:
         )
     
     result = json.loads(chat_completion.choices[0].message.content)
-    # pretty_result = json.dumps(result, ensure_ascii=False, indent=4)
     
     city = result["city"]
     fashion = result["lifestyle"]['fashion']
@@ -107,39 +107,33 @@ elif st.session_state.current_page == 5:
 
     with tab1:
       st.subheader(f"{city}에서 감각적으로 사는 사람들의 라이프스타일을 분석해보았어요.")
-      st.write("패션")
-  
-
+      st.markdown("#### 패션")
       for f in fashion:
           with st.container(border=True):
-            st.write(f["brand"])
+            st.markdown(f"##### {f["brand"]}")
             st.write(f["explanation"])
-      st.write("가치관") 
+      st.markdown("#### 가치관") 
       for v in values:
           with st.container(border=True):
-            st.write(v["idea"])
+            st.markdown(f"##### {v["idea"]}")
             st.write(v["explanation"])
-      st.write("아이템")
+      st.markdown("#### 아이템")
       for i in items:
         with st.container(border=True):
-            st.write(i["brand"])
+            st.markdown(f"##### {i["brand"]}")
             st.write(i["explanation"])
 
     with tab2:
       st.subheader(f"{city}에 사는 감각적인 사람들을 모아봤어요.")
       for p in people:
         with st.container(border=True):
-          st.write(p['name'])
-          st.markdown(f"[{p["account"]}]({p["accountUrl"]})")
+          st.markdown(f"#### **{p['name']}**")
           st.write(p["explanation"])
-
-
-    
-
-# """
-# TODO
-# - 첫 페이지 디자인
-# - 문항 페이지 디자인
-# - 결과 페이지 디자인
-
-# """
+          instagram_embed_code = f"""
+          <blockquote class="instagram-media" data-instgrm-permalink="{p["accountUrl"]}" data-instgrm-version="12" style="border:none;" >
+              <div style="padding:16px;"> <a href="{p["accountUrl"]}" target="_blank"> </a></div>
+          </blockquote>
+          <script async defer src="//www.instagram.com/embed.js"></script>
+          """
+          components.html(instagram_embed_code)
+          
