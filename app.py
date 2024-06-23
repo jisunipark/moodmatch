@@ -380,7 +380,7 @@ elif st.session_state.current_page == 5:
                     "content": f"성격: {', '.join(info['character'])} \n 가치관: {', '.join(info['values'])} \n 취향: {', '.join(info['taste'])}",
                 },
             ],
-            model="gpt-4o",
+            model="gpt-3.5-turbo",
             response_format={"type": "json_object"},
         )
 
