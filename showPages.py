@@ -4,8 +4,13 @@ import streamlit as st
 MULTISELECT_PLACEHOLDER = "최대 다섯 개까지 고를 수 있어요"
 
 
+def showLogo():
+    with st.container(height=100, border=None):
+        st.image("logo.svg", width=250)
+
+
 def showPage1():
-    st.progress(0)
+    st.image("logo.svg", width=400)
     st.subheader("나만의 분위기를 만들고 싶다면")
     st.subheader("CHUGUMI FOR YOU에서")
     st.subheader("나만의 라이프스타일 추구미를 발견해보세요")
@@ -13,7 +18,8 @@ def showPage1():
 
 # 성격 - character
 def showPage2():
-    st.progress(33)
+    showLogo()
+    st.progress(0)
     st.subheader("당신은 어떤 사람인가요?")
     st.markdown(":gray[당신의 성격이 가장 잘 나타나는 표현을 골라주세요.]")
     character = st.multiselect(
@@ -60,7 +66,8 @@ def showPage2():
 
 # 가치관 - values
 def showPage3():
-    st.progress(66)
+    showLogo()
+    st.progress(33)
     st.subheader("당신이 무엇을 중요하게 여기나요?")
     st.markdown(":gray[당신의 가치관이 가장 잘 나타나는 표현을 골라주세요.]")
     values = st.multiselect(
@@ -107,7 +114,8 @@ def showPage3():
 
 # 취향 - taste
 def showPage4():
-    st.progress(100)
+    showLogo()
+    st.progress(66)
     st.subheader("당신은 어떤 스타일을 좋아하나요?")
     st.markdown(":gray[당신의 취향이 가장 잘 나타나는 표현을 골라주세요.]")
     taste = st.multiselect(
