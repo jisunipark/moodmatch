@@ -1,5 +1,5 @@
 <h1 align="center">
- <img src="assets/logo.svg" width="300">
+ <img src="logo.svg" width="300">
 </h1>
 MoodMatch는 유저에게 가장 어울리는 도시와 그에 맞는 스타일을 찾아주는 AI 추구미 큐레이션 서비스입니다.
 <br>
