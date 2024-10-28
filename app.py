@@ -182,14 +182,14 @@ def add_info(item):
 
 def showLogo():
     with st.container(height=100, border=None):
-        st.image("logo.svg", width=250)
+        st.image("assets/logo.svg", width=250)
 
 
 MULTISELECT_PLACEHOLDER = "최대 다섯 개까지 고를 수 있어요"
 
 
 def showPage1():
-    st.image("landing-logo.png")
+    st.image("assets/landing-logo.png")
     if st.button("나만의 추구미 찾으러 가기"):
         move_to_next_page()
 
